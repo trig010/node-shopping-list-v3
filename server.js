@@ -42,7 +42,6 @@ app.post('/shopping-list', jsonParser, (req, res) => {
       return res.status(400).send(message);
     }
   }
-
   const item = ShoppingList.create(req.body.name, req.body.budget);
   res.status(201).json(item);
 });
@@ -75,6 +74,12 @@ app.post('/recipes', jsonParser, (req, res) => {
 
 app.get('/recipes', (req, res) => {
   res.json(Recipes.get());
+})
+
+app.delete('/recipes/:id', (req, res) => {
+    Recipes.delete(req.params.id);
+    console.log(`Deleted recipe item \`${req.params.id}\``);
+    res.status(204).send({message: 'Item deleted'});
 })
 
 app.listen(process.env.PORT || 8080, () => {
